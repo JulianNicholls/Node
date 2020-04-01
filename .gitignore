@@ -1,0 +1,6 @@
+node_modules
+express-ts/
+mqtt/
+tsearch/
+videoInfo/
+test-client/

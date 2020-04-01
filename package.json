@@ -1,0 +1,17 @@
+{
+  "name": "node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "ascii-image.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Julian Nicholls <juliannicholls29@gmail.com> (https://reallybigshoe.co.uk/)",
+  "license": "ISC",
+  "dependencies": {
+    "image-to-ascii": "^3.0.12",
+    "justify-text": "^1.1.0",
+    "md5": "^2.2.1"
+  }
+}
