@@ -10,7 +10,6 @@ let testarray;
 
 // Call with mergesort(array)
 function mergesort(a) {
-
   const b = [...a];
   mergeSplit(b, 0, a.length, a);
 }
@@ -45,6 +44,7 @@ function merge(a, begin, middle, end, b) {
 function quicksort(a, lo, hi) {
   if (lo < hi) {
     const p = partition(a, lo, hi);
+
     quicksort(a, lo, p);
     quicksort(a, p + 1, hi);
   }
@@ -107,7 +107,7 @@ function showGC() {
 }
 
 function formatns(value, size = 0) {
-  const us = Number(value / 1000n); // Convert to to us;
+  const us = Number(value / 1000n); // Convert to us
   let fs;
 
   if (us > 1000000) {
