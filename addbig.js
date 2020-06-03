@@ -1,11 +1,11 @@
 const add = (astr, bstr) => {
   const maxLen = Math.max(astr.length, bstr.length);
-  const a = [...astr.padStart(maxLen, '0')].map(Number);
-  const b = [...bstr.padStart(maxLen, '0')].map(Number);
+  const a = [...astr.padStart(maxLen, '0')];
+  const b = [...bstr.padStart(maxLen, '0')];
 
   const result = a.reduceRight(
     (acc, digit, idx) => {
-      const sum = digit + b[idx] + acc.carry;
+      const sum = +digit + +b[idx] + acc.carry;
 
       return { sum: (sum % 10) + acc.sum, carry: Math.floor(sum / 10) };
     },
@@ -17,18 +17,18 @@ const add = (astr, bstr) => {
 
 console.assert(add('456', '123') === '579');
 console.assert(add('456', '545') === '1001');
-console.assert(
-  add(
-    '1000000000000000004926543050000000000000000001',
-    '9000000000000000000000008456593280000000000001'
-  ) === '10000000000000000004926551506593280000000000002',
-  add(
-    '1000000000000000004926543050000000000000000001',
-    '9000000000000000000000008456593280000000000001'
-  )
+
+let result = add(
+  '1999999999999999994926543050000000000000000001',
+  '9000000000000000006000008456593280000000000001'
 );
 
-const result = add(
+console.assert(
+  result === '11000000000000000000926551506593280000000000002',
+  result
+);
+
+result = add(
   '6576540967436508695743605478685904365743865043675468058476509473658409367549067543609574',
   '7527501254319058473584093257439205743895043574309257439025473259043275439025754875380243'
 );
