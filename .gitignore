@@ -1,7 +1,6 @@
 node_modules
-express-ts/
-mqtt/
-tsearch/
-videoInfo/
-test-client/
-cartoons
+express-ts
+mqtt
+tsearch
+videoInfo
+test-client
