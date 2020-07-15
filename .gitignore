@@ -1,6 +1,7 @@
 node_modules
 express-ts
 mqtt
+test-client
+transport-hub
 tsearch
 videoInfo
-test-client
