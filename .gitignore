@@ -1,6 +1,7 @@
 node_modules
 express-ts
 mqtt
+rss
 test-client
 transport-hub
 tsearch
