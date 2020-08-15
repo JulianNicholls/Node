@@ -1,46 +1,86 @@
 let str = 'string';
-let arr = [1, 2, 3, 4, 5];
-let obj = { a: 1, b: 2, c: 3, d: 4, e: 5 };
+let arr = ['a', 'b', 'c', 'd', 'e'];
+let obj = { a: 'one', b: 'two', c: 'three', d: 'four', e: 'five' };
+
+console.log({string: str, array: arr, object: obj});
+
+let strout = '\nfor...of str: ';
 
 for (item of str) {
-  console.log('of str item', item);           // Characters
+  strout += `${item} `;                       // Characters
 }
+
+console.log(strout, '(characters)');
+
+strout = 'for...of arr: ';
 
 for (item of arr) {
-  console.log('of arr item', item);           // Values
+  strout += `${item} `;                       // Values
 }
 
+console.log(strout, '(values)');
+
+//
 // Can't do for...of over an object
 // for (item of obj) {
 //   console.log('obj item', item);
 // }
 
+console.log("\nCan't do for...of over a whole object\n");
+
+strout = 'for...of Object.entries: ';
+
 for (item of Object.entries(obj)) {
-  console.log('of obj entry item', item);     // [key, value]s
+  strout += `[${item}] `;                       // [key, value]s
 }
 
-for (item of Object.keys(obj)) {              // Keys
-  console.log('of obj entry item', item);
+console.log(strout, '(key, value pairs)');
+
+strout = 'for...of Object.keys: ';
+
+for (item of Object.keys(obj)) {              
+  strout += `${item} `;                       // Keys
 }
 
+console.log(strout, '(keys)');
+
+strout = '\nfor...in str: ';
 
 for (item in str) {
-  console.log('in str item', item);           // Indices
+  strout += `${item} `;                       // Indices
 }
+
+console.log(strout, '(indices)');
+
+strout = 'for...in arr: ';
 
 for (item in arr) {
-  console.log('in arr item', item);           // Indices
+  strout += `${item} `;                       // Indices
 }
+
+console.log(strout, '(indices)');
+
+strout = 'for...in obj: ';
 
 for (item in obj) {
-  console.log('in obj item', item);           // Keys
+  strout += `${item} `;                       // Keys
 }
+
+console.log(strout, '(keys)');
+
+strout = 'for...in Object.entries: ';
 
 for (item in Object.entries(obj)) {
-  console.log('in obj entry item', item);     // Indices
+  strout += `${item} `;                       // Indices
 }
 
+console.log(strout, '(indices)');
+
+strout = 'for...in Object.keys: ';
+
 for (item in Object.keys(obj)) {
-  console.log('in obj entry item', item);     // Indices
+  strout += `${item} `;                       // Indices
 }
+
+console.log(strout, '(indices)');
 
