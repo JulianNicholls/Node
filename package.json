@@ -10,8 +10,8 @@
   "author": "Julian Nicholls <juliannicholls29@gmail.com> (https://reallybigshoe.co.uk/)",
   "license": "ISC",
   "dependencies": {
-    "image-to-ascii": "^3.0.12",
-    "justify-text": "^1.1.0",
-    "md5": "^2.2.1"
+    "image-to-ascii": "^3.0.13",
+    "justify-text": "^1.1.2",
+    "md5": "^2.3.0"
   }
 }
