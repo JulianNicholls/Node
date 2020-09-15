@@ -132,25 +132,25 @@ function newArray(size, type = RANDOM) {
   return array;
 }
 
-// Small test (default 100 items)
-function smallTest(size = 100) {
+// Small test (default 10000 items)
+function smallTest(size = 10000) {
   testarray = newArray(size, RANDOM);
   console.log(testarray.slice(0, 20));
-  quicksort2(testarray, 0, testarray.length - 1);
+  quicksort(testarray, 0, testarray.length - 1);
   checkSorted(testarray, false);
 }
 
-// Full test (10000-20000000 items)
+// Full test (100000-50000000 items)
 function fullTest() {
   const coeffs = [2, 2.5, 2];
 
   for (let type = 0; type < TYPES.length; ++type) {
     console.log(`\n\t${TYPES[type]}`);
-    let size = 10000;
+    let size = 100000;
 
     console.log('            MergeSort  QuickSort  JS sort()');
 
-    for (let i = 0; i < 11; ++i) {
+    for (let i = 0; i < 8; ++i) {
       testarray = newArray(size, type);
       let start = process.hrtime.bigint();
       mergesort(testarray);
