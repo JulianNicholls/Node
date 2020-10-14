@@ -2,20 +2,20 @@ let str = 'string';
 let arr = ['a', 'b', 'c', 'd', 'e'];
 let obj = { a: 'one', b: 'two', c: 'three', d: 'four', e: 'five' };
 
-console.log({string: str, array: arr, object: obj});
+console.log({ string: str, array: arr, object: obj });
 
-let strout = '\nfor...of str: ';
+let strout = '\nfor...of string: ';
 
 for (item of str) {
-  strout += `${item} `;                       // Characters
+  strout += `${item} `; // Characters
 }
 
 console.log(strout, '(characters)');
 
-strout = 'for...of arr: ';
+strout = 'for...of array: ';
 
 for (item of arr) {
-  strout += `${item} `;                       // Values
+  strout += `${item} `; // Values
 }
 
 console.log(strout, '(values)');
@@ -31,31 +31,39 @@ console.log("\nCan't do for...of over a whole object\n");
 strout = 'for...of Object.entries: ';
 
 for (item of Object.entries(obj)) {
-  strout += `[${item}] `;                       // [key, value]s
+  strout += `[${item}] `; // [key, value]s
 }
 
 console.log(strout, '(key, value pairs)');
 
 strout = 'for...of Object.keys: ';
 
-for (item of Object.keys(obj)) {              
-  strout += `${item} `;                       // Keys
+for (item of Object.keys(obj)) {
+  strout += `${item} `; // Keys
 }
 
 console.log(strout, '(keys)');
 
-strout = '\nfor...in str: ';
+strout = 'for...of Object.values: ';
+
+for (item of Object.values(obj)) {
+  strout += `${item} `; // Values
+}
+
+console.log(strout, '(values)');
+
+strout = '\nfor...in string: ';
 
 for (item in str) {
-  strout += `${item} `;                       // Indices
+  strout += `${item} `; // Indices
 }
 
 console.log(strout, '(indices)');
 
-strout = 'for...in arr: ';
+strout = 'for...in array: ';
 
 for (item in arr) {
-  strout += `${item} `;                       // Indices
+  strout += `${item} `; // Indices
 }
 
 console.log(strout, '(indices)');
@@ -63,15 +71,15 @@ console.log(strout, '(indices)');
 strout = 'for...in obj: ';
 
 for (item in obj) {
-  strout += `${item} `;                       // Keys
+  strout += `${item} `; // Keys
 }
 
 console.log(strout, '(keys)');
 
-strout = 'for...in Object.entries: ';
+strout = '\nfor...in Object.entries: ';
 
 for (item in Object.entries(obj)) {
-  strout += `${item} `;                       // Indices
+  strout += `${item} `; // Indices
 }
 
 console.log(strout, '(indices)');
@@ -79,8 +87,15 @@ console.log(strout, '(indices)');
 strout = 'for...in Object.keys: ';
 
 for (item in Object.keys(obj)) {
-  strout += `${item} `;                       // Indices
+  strout += `${item} `; // Indices
 }
 
 console.log(strout, '(indices)');
 
+strout = 'for...in Object.values: ';
+
+for (item in Object.values(obj)) {
+  strout += `${item} `; // Indices
+}
+
+console.log(strout, '(indices)');
