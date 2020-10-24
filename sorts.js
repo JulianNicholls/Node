@@ -8,6 +8,30 @@ const TYPES = ['Random', 'Already Sorted', 'Reverse Order'];
 
 let testarray;
 
+function shellsort(a) {
+  const len = a.length;
+  let stride = len;
+  let done = false;
+
+  while (!done) {
+    let swapped;
+    stride = Math.floor(stride / 2);
+
+    do {
+      swapped = false;
+
+      for (i = 0; i < len - stride; ++i) {
+        if (a[i] > a[i + stride]) {
+          swap(a, i, i + stride);
+          swapped = true;
+        }
+      }
+    } while (swapped);
+
+    if (stride === 1) done = true;
+  }
+}
+
 // Call with mergesort(array)
 function mergesort(a) {
   const b = [...a];
@@ -87,7 +111,7 @@ function checkSorted(a, silent = true) {
 }
 
 function showGC() {
-  const formatMemory = value => {
+  const formatMemory = (value) => {
     const k = value / 1024;
 
     if (k < 1024) return Math.floor(k) + 'K';
@@ -136,25 +160,31 @@ function newArray(size, type = RANDOM) {
 function smallTest(size = 10000) {
   testarray = newArray(size, RANDOM);
   console.log(testarray.slice(0, 20));
-  quicksort(testarray, 0, testarray.length - 1);
+  shellsort(testarray);
   checkSorted(testarray, false);
 }
 
 // Full test (100000-50000000 items)
-function fullTest() {
+function fullTest(sizes = 8) {
   const coeffs = [2, 2.5, 2];
 
   for (let type = 0; type < TYPES.length; ++type) {
     console.log(`\n\t${TYPES[type]}`);
     let size = 100000;
 
-    console.log('            MergeSort  QuickSort  JS sort()');
+    console.log('            ShellSort  MergeSort  QuickSort  JS sort()');
 
-    for (let i = 0; i < 8; ++i) {
+    for (let i = 0; i < sizes; ++i) {
       testarray = newArray(size, type);
       let start = process.hrtime.bigint();
       mergesort(testarray);
       const mergeEnd = process.hrtime.bigint() - start;
+      checkSorted(testarray);
+
+      testarray = newArray(size, type);
+      start = process.hrtime.bigint();
+      shellsort(testarray);
+      const shellEnd = process.hrtime.bigint() - start;
       checkSorted(testarray);
 
       testarray = newArray(size, type);
@@ -171,13 +201,14 @@ function fullTest() {
 
       let min = 'QuickSort';
 
-      if(mergeEnd < q2End && mergeEnd < sortEnd) min = 'MergeSort';
-      else if(sortEnd < q2End && sortEnd < mergeEnd) min = 'JS sort()'
+      if (mergeEnd < q2End && mergeEnd < sortEnd) min = 'MergeSort';
+      else if (sortEnd < q2End && sortEnd < mergeEnd) min = 'JS sort()';
 
       console.log(
-        `${rjust(size.toString(), 9)}: ${formatns(mergeEnd, 9)}  ${formatns(
-          q2End, 9
-        )}  ${formatns(sortEnd, 9)}    Fastest: ${min}`
+        `${rjust(size.toString(), 9)}: ${formatns(shellEnd, 9)}  ${formatns(
+          mergeEnd,
+          9
+        )}  ${formatns(q2End, 9)}  ${formatns(sortEnd, 9)}    Fastest: ${min}`
       );
 
       size *= coeffs[i % 3];
@@ -185,6 +216,6 @@ function fullTest() {
   }
 }
 
-// smallTest(100000);
+// smallTest(20000);
 
-fullTest();
+fullTest(5);
