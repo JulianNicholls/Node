@@ -216,6 +216,6 @@ function fullTest(sizes = 8) {
   }
 }
 
-// smallTest(20000);
+smallTest(2000000);
 
-fullTest(5);
+// fullTest(5);
