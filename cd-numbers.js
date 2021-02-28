@@ -5,30 +5,18 @@
  * After James Stanley 2014
  */
 
+const { stringify } = require('uuid');
+
 let bestresult;
 let bestvalsums;
 
 const OPS = {
   '+': (n1, n2) => (n1 < 0 || n2 < 0 ? false : n1 + n2),
-  '-': function (n1, n2) {
-    if (n2 >= n1) return false;
-    return n1 - n2;
-  },
-  _: function (n2, n1) {
-    if (n2 >= n1) return false;
-    return n1 - n2;
-  },
-  '*': function (n1, n2) {
-    return n1 * n2;
-  },
-  '/': function (n1, n2) {
-    if (n2 == 0 || n1 % n2 != 0) return false;
-    return n1 / n2;
-  },
-  '?': function (n2, n1) {
-    if (n2 == 0 || n1 % n2 != 0) return false;
-    return n1 / n2;
-  },
+  '-': (n1, n2) => (n2 >= n1 ? false : n1 - n2),
+  _: (n2, n1) => (n2 >= n1 ? false : n1 - n2),
+  '*': (n1, n2) => n1 * n2,
+  '/': (n1, n2) => (n2 == 0 || n1 % n2 != 0 ? false : n1 / n2),
+  '?': (n2, n1) => (n2 == 0 || n1 % n2 != 0 ? false : n1 / n2),
 };
 
 const OPCOST = {
@@ -51,32 +39,35 @@ function _recurse_solve_numbers(
 ) {
   levels--;
 
-  for (var i = 0; i < numbers.length - 1; i++) {
-    var ni = numbers[i];
+  for (let i = 0; i < numbers.length - 1; ++i) {
+    const ni = numbers[i];
 
     if (ni === false) continue;
 
     numbers[i] = false;
 
-    for (var j = i + 1; j < numbers.length; j++) {
-      var nj = numbers[j];
+    for (let j = i + 1; j < numbers.length; ++j) {
+      const nj = numbers[j];
 
       if (nj === false) continue;
 
       if (i < searchedi && !was_generated[i] && !was_generated[j]) continue;
 
-      for (var o in OPS) {
-        var r = OPS[o](ni[0], nj[0]);
+      for (const o in OPS) {
+        const r = OPS[o](ni[0], nj[0]);
         if (r === false) continue;
 
-        var op_cost = Math.abs(r);
-        while (op_cost % 10 == 0 && op_cost != 0) op_cost /= 10;
+        let op_cost = Math.abs(r);
+        while (op_cost % 10 == 0 && op_cost != 0) {
+          op_cost /= 10;
+        }
+
         if ((ni[0] == 10 || nj[0] == 10) && o == '*')
           // HACK: multiplication by 10 is cheap
           op_cost = 1;
         op_cost *= OPCOST[o];
 
-        var newvalsums = valsums + op_cost;
+        const newvalsums = valsums + op_cost;
 
         if (
           Math.abs(r - target) < Math.abs(bestresult[0] - target) ||
@@ -88,7 +79,7 @@ function _recurse_solve_numbers(
         }
 
         numbers[j] = [r, o, ni, nj];
-        var old_was_gen = was_generated[j];
+        const old_was_gen = was_generated[j];
         was_generated[j] = true;
 
         if (
@@ -119,18 +110,17 @@ function fullsize(array) {
 
   let len = 0;
 
-  for (let i = 0; i < array.length; ++i) len += fullsize(array[i]);
+  for (let i = 0; i < array.length; ++i) {
+    len += fullsize(array[i]);
+  }
 
   return len + array.length;
 }
 
 function _solve_numbers(numbers, target, trickshot) {
-  numbers = numbers.map(function (x) {
-    return [x, false];
-  });
+  numbers = numbers.map((x) => [x, false]);
 
-  var was_generated = [];
-  for (var i = 0; i < numbers.length; i++) was_generated.push(false);
+  const was_generated = new Array(numbers.length).fill(false);
 
   bestresult = [0, 0];
 
@@ -149,19 +139,19 @@ function _solve_numbers(numbers, target, trickshot) {
 }
 
 function tidyup_result(result) {
-  var mapping = {
+  const mapping = {
     '?': '/',
     _: '-',
   };
 
-  var swappable = {
+  const swappable = {
     '*': true,
     '+': true,
   };
 
   if (result.length < 4) return result;
 
-  for (let i = 2; i < result.length; i++) {
+  for (let i = 2; i < result.length; ++i) {
     let child = result[i];
 
     child = tidyup_result(child);
@@ -176,32 +166,39 @@ function tidyup_result(result) {
 
   if (result[1] in mapping) {
     result[1] = mapping[result[1]];
-    const j = result[2];
+
+    const temp = result[2];
     result[2] = result[3];
-    result[3] = j;
+    result[3] = temp;
   } else if (swappable[result[1]]) {
     const childs = result.slice(2).sort((a, b) => b[0] - a[0]);
 
-    for (let i = 2; i < result.length; ++i) result[i] = childs[i - 2];
+    for (let i = 2; i < result.length; ++i) {
+      result[i] = childs[i - 2];
+    }
   }
 
   return result;
 }
 
 function serialise_result(result) {
-  var childparts = [];
+  const childparts = [];
 
   for (let i = 2; i < result.length; ++i) {
     const child = result[i];
 
-    if (child.length >= 4) childparts.push(serialise_result(child));
+    if (child.length >= 4) {
+      childparts.push(serialise_result(child));
+    }
   }
 
   childparts.sort((a, b) => fullsize(b) - fullsize(a));
 
   let parts = [];
 
-  for (let i = 0; i < childparts.length; ++i) parts = parts.concat(childparts[i]);
+  for (let i = 0; i < childparts.length; ++i) {
+    parts = parts.concat(childparts[i]);
+  }
 
   const sliced = result.slice(2).map((l) => l[0]);
   const thispart = [result[0], result[1]].concat(sliced);
@@ -218,16 +215,18 @@ function stringify_result(serialised, target) {
     const x = serialised[i];
     const args = x.slice(2);
 
-    output += args.join(' ' + x[1] + ' ') + ' = ' + x[0] + '\n';
+    output += args.join(` ${x[1]} `) + ` = ${x[0]}, `;
   }
 
+  output = output.substr(0, output.length - 2); // Strip final ', '
+
   const result = serialised[serialised.length - 1][0];
-  if (result != target) output += '(off by ' + Math.abs(result - target) + ')\n';
+  if (result != target) output += `(off by ${Math.abs(result - target)})`;
 
   return output;
 }
 
-function solve_numbers(numbers, target, trickshot = false) {
+exports.solve_numbers = (numbers, target, trickshot = false) => {
   numbers.sort();
   bestresult = [numbers[0], numbers[0]];
 
@@ -235,7 +234,7 @@ function solve_numbers(numbers, target, trickshot = false) {
    * have an interesting answer that's close than an exact answer
    */
   if (!trickshot) {
-    for (let i = 1; i < numbers.length; i++) {
+    for (let i = 1; i < numbers.length; ++i) {
       if (Math.abs(numbers[i] - target) < Math.abs(bestresult[0] - target)) {
         bestresult = [numbers[i], numbers[i]];
         bestvalsums = numbers[i];
@@ -245,10 +244,9 @@ function solve_numbers(numbers, target, trickshot = false) {
     if (bestresult[0] == target) return target + ' = ' + target;
   }
 
-  return stringify_result(
-    serialise_result(tidyup_result(_solve_numbers(numbers, target, trickshot))),
-    target
+  const result_array = serialise_result(
+    tidyup_result(_solve_numbers(numbers, target, trickshot))
   );
-}
 
-console.log(solve_numbers([2, 1, 8, 10, 25, 50], 643));
+  return stringify_result(result_array, target);
+};
