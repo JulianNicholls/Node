@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 const { rjust } = require('justify-text');
 
 const { formatns } = require('./times');

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 const { rjust } = require('justify-text');
 
 exports.formatns = (value, size = 0) => {
