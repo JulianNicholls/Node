@@ -1,4 +1,7 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const { rjust } = require('justify-text');
+
+const { formatns } = require('./times');
 
 const RANDOM = 0;
 const SORTED = 1;
@@ -20,7 +23,7 @@ function shellsort(a) {
     do {
       swapped = false;
 
-      for (i = 0; i < len - stride; ++i) {
+      for (let i = 0; i < len - stride; ++i) {
         if (a[i] > a[i + stride]) {
           swap(a, i, i + stride);
           swapped = true;
@@ -130,21 +133,6 @@ function showGC() {
   );
 }
 
-function formatns(value, size = 0) {
-  const us = Number(value / 1000n); // Convert to us
-  let fs;
-
-  if (us > 1000000) {
-    fs = (us / 1000000).toFixed(3) + ' s';
-  } else {
-    fs = (us / 1000).toFixed(1) + 'ms';
-  }
-
-  if (size === 0) return fs;
-
-  return rjust(fs, size);
-}
-
 function newArray(size, type = RANDOM) {
   if (type === RANDOM)
     return new Array(size).fill(0).map(() => Math.floor(Math.random() * size));
@@ -159,9 +147,12 @@ function newArray(size, type = RANDOM) {
 // Small test (default 10000 items)
 function smallTest(size = 10000) {
   testarray = newArray(size, RANDOM);
-  console.log(testarray.slice(0, 20));
+  console.log(`Shellsort ${size} items.`);
+  let start = process.hrtime.bigint();
   shellsort(testarray);
+  const shellEnd = process.hrtime.bigint() - start;
   checkSorted(testarray, false);
+  console.log(formatns(shellEnd));
 }
 
 // Full test (100000-50000000 items)
@@ -170,7 +161,7 @@ function fullTest(sizes = 8) {
 
   for (let type = 0; type < TYPES.length; ++type) {
     console.log(`\n\t${TYPES[type]}`);
-    let size = 100000;
+    let size = 100_000;
 
     console.log('            ShellSort  MergeSort  QuickSort  JS sort()');
 
@@ -216,6 +207,6 @@ function fullTest(sizes = 8) {
   }
 }
 
-smallTest(2000000);
+smallTest(10_000_000);
 
 // fullTest(5);
