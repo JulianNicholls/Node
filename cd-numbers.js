@@ -2,10 +2,8 @@
  *
  * Countdown game solver
  *
- * After James Stanley 2014
+ * After James Stanley 2014 - https://github.com/jes/cntdn
  */
-
-const { stringify } = require('uuid');
 
 let bestresult;
 let bestvalsums;
@@ -15,8 +13,8 @@ const OPS = {
   '-': (n1, n2) => (n2 >= n1 ? false : n1 - n2),
   _: (n2, n1) => (n2 >= n1 ? false : n1 - n2),
   '*': (n1, n2) => n1 * n2,
-  '/': (n1, n2) => (n2 == 0 || n1 % n2 != 0 ? false : n1 / n2),
-  '?': (n2, n1) => (n2 == 0 || n1 % n2 != 0 ? false : n1 / n2),
+  '/': (n1, n2) => (n2 === 0 || n1 % n2 !== 0 ? false : n1 / n2),
+  '?': (n2, n1) => (n2 === 0 || n1 % n2 !== 0 ? false : n1 / n2),
 };
 
 const OPCOST = {
@@ -58,11 +56,11 @@ function _recurse_solve_numbers(
         if (r === false) continue;
 
         let op_cost = Math.abs(r);
-        while (op_cost % 10 == 0 && op_cost != 0) {
+        while (op_cost % 10 === 0 && op_cost !== 0) {
           op_cost /= 10;
         }
 
-        if ((ni[0] == 10 || nj[0] == 10) && o == '*')
+        if ((ni[0] === 10 || nj[0] === 10) && o === '*')
           // HACK: multiplication by 10 is cheap
           op_cost = 1;
         op_cost *= OPCOST[o];
@@ -71,7 +69,7 @@ function _recurse_solve_numbers(
 
         if (
           Math.abs(r - target) < Math.abs(bestresult[0] - target) ||
-          (Math.abs(r - target) == Math.abs(bestresult[0] - target) &&
+          (Math.abs(r - target) === Math.abs(bestresult[0] - target) &&
             (trickshot || newvalsums < bestvalsums))
         ) {
           bestresult = [r, o, ni, nj];
@@ -84,7 +82,7 @@ function _recurse_solve_numbers(
 
         if (
           levels > 0 &&
-          (trickshot || bestresult[0] != target || newvalsums < bestvalsums)
+          (trickshot || bestresult[0] !== target || newvalsums < bestvalsums)
         )
           _recurse_solve_numbers(
             numbers,
@@ -106,7 +104,7 @@ function _recurse_solve_numbers(
 }
 
 function fullsize(array) {
-  if (array.constructor != Array) return 0;
+  if (array.constructor !== Array) return 0;
 
   let len = 0;
 
@@ -156,7 +154,7 @@ function tidyup_result(result) {
 
     child = tidyup_result(child);
 
-    if (child[1] == result[1] && swappable[result[1]]) {
+    if (child[1] === result[1] && swappable[result[1]]) {
       result.splice(i--, 1);
       result = result.concat(child.slice(2));
     } else {
@@ -221,12 +219,12 @@ function stringify_result(serialised, target) {
   output = output.substr(0, output.length - 2); // Strip final ', '
 
   const result = serialised[serialised.length - 1][0];
-  if (result != target) output += `(off by ${Math.abs(result - target)})`;
+  if (result != target) output += ` (off by ${Math.abs(result - target)})`;
 
   return output;
 }
 
-exports.solve_numbers = (numbers, target, trickshot = false) => {
+exports.serialisedResult = (numbers, target, trickshot = false) => {
   numbers.sort();
   bestresult = [numbers[0], numbers[0]];
 
@@ -241,12 +239,17 @@ exports.solve_numbers = (numbers, target, trickshot = false) => {
       }
     }
 
-    if (bestresult[0] == target) return target + ' = ' + target;
+    if (bestresult[0] === target) return target + ' = ' + target;
   }
 
-  const result_array = serialise_result(
+  return serialise_result(
     tidyup_result(_solve_numbers(numbers, target, trickshot))
   );
+};
 
-  return stringify_result(result_array, target);
+exports.solve_numbers = (numbers, target, trickshot = false) => {
+  return stringify_result(
+    exports.serialisedResult(numbers, target, trickshot),
+    target
+  );
 };
