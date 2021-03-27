@@ -219,7 +219,7 @@ function stringify_result(serialised, target) {
   output = output.substr(0, output.length - 2); // Strip final ', '
 
   const result = serialised[serialised.length - 1][0];
-  if (result != target) output += ` (off by ${Math.abs(result - target)})`;
+  if (result !== target) output += ` (off by ${Math.abs(result - target)})`;
 
   return output;
 }
