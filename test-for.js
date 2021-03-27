@@ -34,6 +34,14 @@ for (const item of Object.entries(obj)) {
   strout += `[${item}] `; // [key, value]s
 }
 
+console.log(strout, '(2 element arrays)');
+
+strout = 'for...of Object.entries, dereferenced: ';
+
+for (const [key, value] of Object.entries(obj)) {
+  strout += `${key}=${value} `; // key=value
+}
+
 console.log(strout, '(key, value pairs)');
 
 strout = 'for...of Object.keys: ';
