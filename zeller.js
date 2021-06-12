@@ -12,9 +12,10 @@ const zDays = [
 
 // Algorithm here: https://en.wikipedia.org/wiki/Zeller%27s_congruence
 // 0 = Saturday, 1 = Sunday etc
-function zeller(day, month, year) { // 0..31, 1..12, full year
-  const m = month < 3 ? month + 12 : month;   // First 2 months of a year...
-  const y = month < 3 ? year - 1 : year;      // Work as 13 & 14 of the previous year
+function zeller(day, month, year) {
+  // 0..31, 1..12, full year
+  const m = month < 3 ? month + 12 : month; // First 2 months of a year...
+  const y = month < 3 ? year - 1 : year; // Work as 13 & 14 of the previous year
   const leap = Math.floor(y / 4) - Math.floor(y / 100) + Math.floor(y / 400);
 
   const h = day + Math.floor((13 * (m + 1)) / 5) + y + leap;
@@ -66,3 +67,10 @@ console.log(`02/09/1752 (Julian): ${z2} - ${zDays[z2]}`);
 
 z2 = zeller(14, 9, 1752);
 console.log(`14/09/1752: ${z2} - ${zDays[z2]}`);
+
+// Today
+const today = new Date();
+const [d, m, y] = [today.getDate(), today.getMonth() + 1, today.getFullYear()];
+z2 = zeller(d, m, y);
+
+console.log(`\nToday: (${d}/${m}/${y}) ${z2} - ${zDays[z2]}`);
