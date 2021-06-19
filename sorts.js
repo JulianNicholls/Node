@@ -206,6 +206,6 @@ function fullTest(sizes = 8) {
   }
 }
 
-smallTest(10_000_000);
+// smallTest(10_000_000);
 
-// fullTest(5);
+fullTest(5);
