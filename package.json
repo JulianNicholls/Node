@@ -10,6 +10,7 @@
   "author": "Julian Nicholls <juliannicholls29@gmail.com> (https://reallybigshoe.co.uk/)",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "image-to-ascii": "^3.0.13",
     "justify-text": "^1.1.2",
     "md5": "^2.3.0",
