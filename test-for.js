@@ -28,7 +28,7 @@ console.log(strout, '(values)');
 
 console.log("\nCan't do for...of over a whole object\n");
 
-strout = 'for...of Object.entries: ';
+strout = 'for...of Object.entries(obj): ';
 
 for (const item of Object.entries(obj)) {
   strout += `[${item}] `; // [key, value]s
@@ -36,7 +36,7 @@ for (const item of Object.entries(obj)) {
 
 console.log(strout, '(2 element arrays)');
 
-strout = 'for...of Object.entries, dereferenced: ';
+strout = 'for...of Object.entries(obj), dereferenced: ';
 
 for (const [key, value] of Object.entries(obj)) {
   strout += `${key}=${value} `; // key=value
@@ -44,7 +44,7 @@ for (const [key, value] of Object.entries(obj)) {
 
 console.log(strout, '(key, value pairs)');
 
-strout = 'for...of Object.keys: ';
+strout = 'for...of Object.keys(obj): ';
 
 for (const item of Object.keys(obj)) {
   strout += `${item} `; // Keys
@@ -52,7 +52,7 @@ for (const item of Object.keys(obj)) {
 
 console.log(strout, '(keys)');
 
-strout = 'for...of Object.values: ';
+strout = 'for...of Object.values(obj): ';
 
 for (const item of Object.values(obj)) {
   strout += `${item} `; // Values
