@@ -1,6 +1,13 @@
 let str = 'string';
 let arr = ['a', 'b', 'c', 'd', 'e'];
 let obj = { a: 'one', b: 'two', c: 'three', d: 'four', e: 'five' };
+let map = new Map();
+let set = new Set(arr);
+
+map.set(1, 'one');
+map.set(2, 'two');
+map.set(3, 'three');
+map.set(4, 'four');
 
 console.log({ string: str, array: arr, object: obj });
 
@@ -19,6 +26,14 @@ for (const item of arr) {
 }
 
 console.log(strout, '(values)');
+
+strout = 'for...of map keys: ';
+
+for (const item of map.keys()) {
+  strout += `${item} `; // Keys
+}
+
+console.log(strout, '(keys)');
 
 //
 // Can't do for...of over an object
@@ -59,6 +74,23 @@ for (const item of Object.values(obj)) {
 }
 
 console.log(strout, '(values)');
+
+strout = '\nfor...of map entries: ';
+
+for (const item of map.entries()) {
+  strout += `[${item}] `; // Arrays
+}
+
+console.log(strout, '(2 element arrays)');
+
+strout = '\nfor...of Set: ';
+
+for (const item of set) {
+  strout += `${item} `; 
+}
+
+console.log(strout, '(values)');
+
 
 strout = '\nfor...in string: ';
 
