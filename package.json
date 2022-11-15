@@ -16,6 +16,8 @@
     "js-levenshtein": "^1.1.6",
     "justify-text": "^1.1.3",
     "md5": "^2.3.0",
+    "node-fetch": "^3.3.0",
+    "node-html-parser": "^6.1.3",
     "qrcode": "^1.4.4",
     "uuid": "^8.3.2"
   },
