@@ -73,4 +73,4 @@ const today = new Date();
 const [d, m, y] = [today.getDate(), today.getMonth() + 1, today.getFullYear()];
 z2 = zeller(d, m, y);
 
-console.log(`\nToday: (${d}/${m}/${y}) ${z2} - ${zDays[z2]}`);
+console.log(`\nToday: (${('0' + d).slice(-2)}/${('0' + m).slice(-2)}/${y}) ${z2} - ${zDays[z2]}`);

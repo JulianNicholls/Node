@@ -8,7 +8,7 @@ exports.formatns = (value, size = 0) => {
     fs = (us / 1_000_000).toFixed(3) + ' s';
   } else if (us > 1000) {
     fs = (us / 1000).toFixed(1) + 'ms';
-  } else fs = us.toFixed(1) + 'ns';
+  } else fs = us.toFixed(1) + 'us';
 
   if (size === 0) return fs;
 
