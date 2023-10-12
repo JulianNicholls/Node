@@ -36,13 +36,13 @@ function processRecords() {
   for (const rec of records) {
     console.log(
       `${rec.Timestamp.toLocaleDateString('en-GB', {
-        day: 'numeric',
+        day: '2-digit',
         month: 'short',
         year: 'numeric',
-      })}:  ${ljust(rec.Sponsor, 30)}  ${ljust(rec.ServerName, 20)}  ${rjust(
-        Math.round(rec.Distance),
-        3
-      )}Km ${rjust(rec.Ping.toFixed(1), 5)}ms ${rjust(normalised(rec.Download), 5)}MBit/s ${rjust(
+      })}:  ${ljust(rec.Sponsor, 30)}  ${ljust(
+        rec.ServerName + ' (' + Math.round(rec.Distance) + 'Km)',
+        22
+      )}  ${rjust(rec.Ping.toFixed(1), 5)}ms ${rjust(normalised(rec.Download), 5)}MBit/s ${rjust(
         normalised(rec.Upload),
         5
       )}MBit/s`
