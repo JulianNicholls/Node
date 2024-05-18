@@ -1,27 +1,22 @@
 const mailer = require('nodemailer');
 
-require('dotenv').config();
-
-const { MAILAUTH_USER, MAILAUTH_PASS } = process.env;
-
-if(!MAILAUTH_USER || !MAILAUTH_PASS) {
-  console.error('No credentails');
-  process.exit(3);
-}
+const { SMTP_MAILAUTH_USER, SMTP_MAILAUTH_PASS } = process.env;
 
 async function main() {
   const transporter = mailer.createTransport({
-    service: 'gmail',
+    host: "smtp.office365.com",
+    port: 587,
+    secure: false, 
     auth: {
-      user: MAILAUTH_USER,
-      pass: MAILAUTH_PASS,
+      user: SMTP_MAILAUTH_USER,
+      pass: SMTP_MAILAUTH_PASS,
     },
   });
 
   const mailOptions = {
-    from: 'Bimdl Registration <' + 'juliannicholls@live.co.uk' + '>',
-    to: 'julian_nicholls@yahoo.co.uk',
-    subject: 'Sent using Nodemailer via Gmail',
+    from: 'Julian Nicholls at Really Big Shoe via Outlook <julian@reallybigshoe.co.uk>',
+    to: 'juliannicholls29+smtp@gmail.com',
+    subject: 'Sent using Nodemailer via SMTP',
     html: `
        <body style="margin: 0; padding: 40px; background-color: #f9f9f9; font-family: Arial, Helvetica, sans-serif;">
       <table bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" width="60%" height="60%" style="background-color: white; border-collapse: collapse; margin-top: 80px; margin-left: auto; margin-right: auto; max-width: 500px; color: black">
@@ -34,10 +29,10 @@ async function main() {
         <tr>
           <td align="left" valign="top" bgcolor="white" style="padding: 40px; color: black; font-size: 14px">
             <p>Hello <strong>User</strong></p>
-            <p>If you receive this (which you will) everything is set up correctly.</p
+            <p>If you receive this (which you will) everything is set up correctly.</p>
             <p>There should be an attachment.</p>
             <p>Best Regards</p>
-            <p style="font-size: 16px; font-family: script; color: #008"><i>Julian N.</
+            <p style="font-size: 16px; font-family: script; color: #008"><i>Julian N.</i></p>
         </tr>
 
         <tr>
@@ -71,6 +66,14 @@ async function main() {
   };
 
   try {
+    transporter.verify((error, success) => {
+      if(error) {
+        console.error(error);
+        process.exit(-1);
+      }
+      else console.log("Server config is OK");
+    });
+
     await transporter.sendMail(mailOptions);
 
     return 'Mail Sent OK';
