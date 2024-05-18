@@ -34,7 +34,7 @@ async function main() {
 
   console.log(strout, '(values)');
 
-  strout = 'for...of map keys:     ';
+  strout = 'for...of map.keys():   ';
 
   for (const item of map.keys()) {
     strout += `${item} `; // Keys
@@ -42,13 +42,21 @@ async function main() {
 
   console.log(strout, '(keys)');
 
-  strout = 'for...of map entries:  ';
+  strout = 'for...of map.entries(): ';
 
   for (const item of map.entries()) {
     strout += `[${item}] `; // Arrays
   }
 
   console.log(strout, '(2 element arrays)');
+
+  strout = 'for...of map.values(): ';
+
+  for (const item of map.values()) {
+    strout += `${item} `; // values
+  }
+
+  console.log(strout);
 
   strout = 'for...of Set:          ';
 
@@ -153,11 +161,7 @@ async function main() {
     await delay(500);
   }
 
-  console.log('\nawait in Array.forEach() (will be broken)');
-  arr.forEach(async (entry) => {
-    console.log(entry);
-    await delay(500);
-  });
+  console.log('\nawait in Array.forEach() would be broken');
 
   return '';
 }

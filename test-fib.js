@@ -25,12 +25,12 @@ const test = (value = 0) => {
     return console.log(`${rjust(value, 4)} (${formatns(recEnd)}): ${fi}`);
   }
 
-  for (let i = 200; i <= 300; i += 10) {
+  for (let i = 200; i <= 400; i += 10) {
     const start = process.hrtime.bigint();
     const fi = fibMemo(i);
     const recEnd = process.hrtime.bigint() - start;
 
-    console.log(`${rjust(i, 5)}  ${rjust(fi, 70)}  ${formatns(recEnd, 9)}`);
+    console.log(`${rjust(i, 5)}  ${rjust(fi, 75)}  ${formatns(recEnd, 9)}`);
   }
 };
 
