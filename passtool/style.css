@@ -12,7 +12,7 @@ body {
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   gap: 1em;
   margin-bottom: 1rem;
 }
@@ -29,23 +29,43 @@ input {
 }
 
 .button-group {
-  border: 1px solid pink;
   display: flex;
+  gap: 1em;
 };
-
-button#btnGenerate {
-  margin-right: 2rem;
-}
 
 #encoded {
   font-family: 'Courier New', Courier, monospace;
   background-color: hsl(187, 81%, 96%);
   padding: 3px 5px;
-  width: 90%;
 }
 
 #check {
   width: 4ch;
+}
+
+#copy-encoded {
+  display: none;
+}
+
+#copied {
+  background: white;
+  padding: 6px 8px;
+  text-align: center;
+  display: none;
+  width: 15ch;
+  margin-inline: auto;
+}
+
+.icon-button {
+  background: dodgerblue;
+  color: white;
+  border: 1px solid darkblue;
+  border-radius: 50px;
+  padding: 4px;
+}
+
+.icon-button:hover {
+  background-color: darkblue;
 }
 
 .button-15 {

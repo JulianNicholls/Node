@@ -4,19 +4,21 @@
   <meta charset="UTF-8" />
   <meta
     http-equiv="Content-Security-Policy"
-    content="default-src 'self'; script-src 'self'"
+    content="default-src 'self' https://ka-f.fontawesome.com; script-src 'self' https://kit.fontawesome.com https://ka-f.fontawesome.com; style-src 'self' 'unsafe-inline';"
   />
   <meta
     http-equiv="X-Content-Security-Policy"
-    content="default-src 'self'; script-src 'self'"
+    content="default-src 'self' https://ka-f.fontawesome.com; script-src 'self' https://kit.fontawesome.com https://ka-f.fontawesome.com;"
   />
   <title>Password Tool</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://kit.fontawesome.com/0849a1b07b.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
   <div class="flex">
-    <input type="text" id="password" width="25">
+    <input type="text" id="password" size="20">
+    <i id="copy-password" class="icon-button fa-solid fa-copy"></i>
     <div class="button-group">
       <button class="button-15" id="btnGenerate">Generate</button>
       <button class="button-15" id="btnEncode">Encode</button>
@@ -25,9 +27,12 @@
 
 
   <div class="flex">
-    <div id="encoded">&nbsp;</div>
+    <input type="text" readonly id="encoded" size="60"/>
+    <i id="copy-encoded" class="icon-button fa-solid fa-copy"></i>
     <div id="check">&nbsp;</div>
   </div>
+
+  <div id="copied" class="center">Copied...</div>
 
   <script src="./renderer.js"></script>
 </body>

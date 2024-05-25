@@ -7,4 +7,5 @@ contextBridge.exposeInMainWorld('electronAPI', {
 
   encode: (text) => ipcRenderer.invoke('crypt:encode', text),
   check: (text, hash) => ipcRenderer.invoke('crypt:check', text, hash),
+  token: (user_id) => ipcRenderer.invoke('stream:token', user_id),
 });
