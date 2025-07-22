@@ -25,7 +25,7 @@ const adjustedRecord = (row) => {
 };
 
 function normalised(value) {
-  return (value / 1_000_000).toFixed(1);
+  return (value / 1_024_000).toFixed(1);
 }
 
 function collectRecord(row) {
@@ -34,12 +34,11 @@ function collectRecord(row) {
 
 function processRecords() {
   for (const rec of records) {
-    console.log(
-      `${rec.Timestamp.toLocaleDateString('en-GB', {
-        day: '2-digit',
-        month: 'short',
-        year: 'numeric',
-      })}:  ${ljust(rec.Sponsor, 30)}  ${ljust(
+    const date = rec.Timestamp.toLocaleDateString('en-GB', {
+        day: '2-digit', month: 'short', year: 'numeric',
+      });
+
+    console.log( `${ljust(date + ':', 14)}  ${ljust(rec.Sponsor, 30)}  ${ljust(
         rec.ServerName + ' (' + Math.round(rec.Distance) + 'Km)',
         22
       )}  ${rjust(rec.Ping.toFixed(1), 5)}ms ${rjust(normalised(rec.Download), 5)}MBit/s ${rjust(
