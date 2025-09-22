@@ -2,27 +2,31 @@ const mailer = require('nodemailer');
 
 const { SMTP_MAILAUTH_USER, SMTP_MAILAUTH_PASS } = process.env;
 
+const transportConfig = {
+  host: "email-smtp.eu-west-1.amazonaws.com",
+  port: 465,
+  secure: true,
+  requireTLS: true,
+  auth: {
+    user: SMTP_MAILAUTH_USER,
+    pass: SMTP_MAILAUTH_PASS,
+  },
+  debug: true
+};
+
 async function main() {
-  const transporter = mailer.createTransport({
-    host: "smtp.office365.com",
-    port: 587,
-    secure: false, 
-    auth: {
-      user: SMTP_MAILAUTH_USER,
-      pass: SMTP_MAILAUTH_PASS,
-    },
-  });
+  const transporter = mailer.createTransport(transportConfig);
 
   const mailOptions = {
-    from: 'Julian Nicholls at Really Big Shoe via Outlook <julian@reallybigshoe.co.uk>',
+    from: 'registration@propertykrowd.com <registration@propertykrowd.com>',
     to: 'juliannicholls29+smtp@gmail.com',
-    subject: 'Sent using Nodemailer via SMTP',
+    subject: 'Registration test',
     html: `
        <body style="margin: 0; padding: 40px; background-color: #f9f9f9; font-family: Arial, Helvetica, sans-serif;">
       <table bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" width="60%" height="60%" style="background-color: white; border-collapse: collapse; margin-top: 80px; margin-left: auto; margin-right: auto; max-width: 500px; color: black">
         <tr>
           <td align="center" valign="top" bgcolor="white" style="border-bottom: 1px solid #e9e9e9">
-            <img src="https://app.bimdl.com/bimdl-logo.png" style="width: 180px" />
+            <img src="https://staging.propertykrowd.com/bimdl-logo.png" style="width: 180px" />
           </td>
         </tr>
 
@@ -66,22 +70,24 @@ async function main() {
   };
 
   try {
-    transporter.verify((error, success) => {
+    transporter.verify(async (error, success) => {
       if(error) {
-        console.error(error);
+        console.error('Config Error', error);
         process.exit(-1);
       }
       else console.log("Server config is OK");
+
+      console.log(`Sending from ${SMTP_MAILAUTH_USER}...`);
+
+      await transporter.sendMail(mailOptions);
+
+      return 'Mail Sent OK';
     });
-
-    await transporter.sendMail(mailOptions);
-
-    return 'Mail Sent OK';
   } catch (err) {
     console.error(err);
-  }
 
-  return 'Oh dear';
+    return 'Oh dear';
+  }
 }
 
 main().then(console.log);
