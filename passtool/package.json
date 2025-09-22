@@ -22,12 +22,12 @@
     "@electron-forge/plugin-auto-unpack-natives": "^7.4.0",
     "@electron-forge/plugin-fuses": "^7.4.0",
     "@electron/fuses": "^1.8.0",
-    "electron": "^35.7.5"
+    "electron": "^38.1.2"
   },
   "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "dotenv": "^16.4.5",
+    "bcryptjs": "^3.0.2",
+    "dotenv": "^17.2.2",
     "electron-squirrel-startup": "^1.0.1",
-    "stream-chat": "^8.33.0"
+    "stream-chat": "^9.20.0"
   }
 }
