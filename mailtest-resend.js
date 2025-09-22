@@ -1,6 +1,11 @@
 const { Resend } = require('resend');
 
-const resend = new Resend('re_dqmuvePz_H9J27sZjFAFPifpSypG6DEBF');
+if (!process.env.RESEND_KEY) {
+  console.error("No RESEND_KEY in environment.");
+  process.exit(-1);
+}
+
+const resend = new Resend(process.env.RESEND_KEY);
 
 async function main() {
   try {
@@ -11,7 +16,7 @@ async function main() {
       html: '<p>Congrats on sending your <strong>first email</strong>!</p>'
     });
 
-    console.log({result});
+    console.log({ result });
 
     return 'Mail Sent OK';
   } catch (err) {
